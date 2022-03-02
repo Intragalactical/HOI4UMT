@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<Platforms>X86;X64</Platforms>
+		<PlatformTarget>x64</PlatformTarget>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<BaseOutputPath>bin\</BaseOutputPath>
+		<DebugType>embedded</DebugType>
+		<PublishSingleFile>true</PublishSingleFile>
+		<PublishReadyToRun>true</PublishReadyToRun>
+		<EnableDynamicLoading>true</EnableDynamicLoading>
+		<GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+		<PreserveCompilationContext>false</PreserveCompilationContext>
+		<IncludeNativeLibrariesForSelfExtract>false</IncludeNativeLibrariesForSelfExtract>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<EnablePreviewFeatures>True</EnablePreviewFeatures>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="LanguageExt.Core" Version="4.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\HOI4UMT.Library\HOI4UMT.Library.csproj">
+			<Private>false</Private>
+			<ExcludeAssets>runtime</ExcludeAssets>
+		</ProjectReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Help.md">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(PlatformTarget)' == 'x86'">
+		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win-x86</RuntimeIdentifier>
+		<SelfContained Condition="'$(SelfContained)' == ''">false</SelfContained>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(PlatformTarget)' == 'x64'">
+		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win-x64</RuntimeIdentifier>
+		<SelfContained Condition="'$(SelfContained)' == ''">false</SelfContained>
+	</PropertyGroup>
+
+	<Target Name="DeleteUselessCrap" AfterTargets="Build">
+		<Message Text="Executing DeleteUselessCrap task" Importance="High" />
+
+		<Delete Files="$(TargetDir)$(ProjectName).deps.json" />
+
+		<Message Text="Deleted useless crap!" Importance="High" />
+	</Target>
+
+	<Target Name="CopyDLLs" AfterTargets="Build">
+		<Message Text="Executing CopyDLLs task" Importance="High" />
+
+		<Copy SourceFiles="$(TargetDir)$(ProjectName).dll;Help.md" DestinationFolder="$(SolutionDir)HOI4UMT.UI\bin\$(Platform)\$(Configuration)\Plugins\$(ProjectName)" />
+
+		<Message Text="Copied build files" Importance="High" />
+	</Target>
+
+</Project>

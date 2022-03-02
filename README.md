@@ -15,6 +15,11 @@ HOI4 UMT (Unified Mod Tool) is a highly extendable and modifiable modding tool f
         - [Running the release version](#running-the-release-version)
     - [Running tests](#running-tests)
     - [Code standards](#code-standards)
+    - [Development guidelines](#development-guidelines)
+        - [Committing and pull requests](#committing-and-pull-requests)
+            - [Commit messages](#commit-messages)
+        - [Adding new dependencies](#adding-new-dependencies)
+    - [If you decide to contribute, THANK YOU!](#if-you-decide-to-contribute-thank-you)
 
 ## Setting up the application
 

@@ -2,12 +2,12 @@
 using LanguageExt;
 using System.Drawing.Imaging;
 
-namespace HOI4UMT.Plugin.ProvinceMap;
+namespace HOI4UMT.Plugin.RiverMap;
 
-internal class ProvinceMapResource : ISaveableFile<Bitmap>, ISaveableFileCreator<Bitmap> {
+internal class RiverMapResource : ISaveableFile<Bitmap>, ISaveableFileCreator<Bitmap> {
     public Bitmap Raw { get; }
 
-    private ProvinceMapResource(Bitmap raw) {
+    private RiverMapResource(Bitmap raw) {
         Raw = raw;
     }
 
@@ -21,5 +21,5 @@ internal class ProvinceMapResource : ISaveableFile<Bitmap>, ISaveableFileCreator
     }
 
     public static ISaveableFile<Bitmap> From(Bitmap raw)
-        => new ProvinceMapResource(raw);
+        => new RiverMapResource(raw);
 }

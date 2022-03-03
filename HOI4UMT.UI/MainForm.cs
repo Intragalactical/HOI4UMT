@@ -67,12 +67,12 @@ public partial class MainForm : Form {
 
     private void MainForm_Load(object sender, EventArgs e) {
         MainSplitContainer.Panel1.Controls.Add(Browser);
-        IEnumerable<IPlugin> pluginsSortedByPosition = Plugins.OrderBy(pwf => pwf.Plugin.Position).Select(pwf => pwf.Plugin);
+        IOrderedEnumerable<PluginWithFolder> pluginsSortedByPosition = Plugins.OrderBy(pwf => pwf.Plugin.Position);
 
-        foreach (IPlugin plugin in pluginsSortedByPosition) {
-            MainTabControl.TabPages.Add(plugin.Name, plugin.Name);
-            TabPage tabPage = MainTabControl.TabPages[plugin.Name];
-            UserControl control = plugin.CreateControl(MapperState);
+        foreach (PluginWithFolder pluginWithFolder in pluginsSortedByPosition) {
+            MainTabControl.TabPages.Add(pluginWithFolder.Plugin.Name, pluginWithFolder.Plugin.Name);
+            TabPage tabPage = MainTabControl.TabPages[pluginWithFolder.Plugin.Name];
+            UserControl control = pluginWithFolder.Plugin.CreateControl(MapperState, pluginWithFolder.Folder);
             control.Dock = DockStyle.Fill;
             tabPage.Controls.Add(control);
         }

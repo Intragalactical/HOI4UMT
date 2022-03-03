@@ -7,6 +7,6 @@ public class Plugin : IPlugin {
     public string HelpFilePath => "./Help.md";
     public double Position => 3;
 
-    public UserControl CreateControl(IMapperState mapperState)
+    public UserControl CreateControl(IMapperState mapperState, string _)
         => new Editor(mapperState);
 }

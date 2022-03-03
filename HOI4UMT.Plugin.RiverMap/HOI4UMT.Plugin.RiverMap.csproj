@@ -33,8 +33,26 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Properties\Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Update="Help.md">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="palette.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 
@@ -59,7 +77,7 @@
 	<Target Name="CopyDLLs" AfterTargets="Build">
 		<Message Text="Executing CopyDLLs task" Importance="High" />
 
-		<Copy SourceFiles="$(TargetDir)$(ProjectName).dll;Help.md" DestinationFolder="$(SolutionDir)HOI4UMT.UI\bin\$(Platform)\$(Configuration)\Plugins\$(ProjectName)" />
+		<Copy SourceFiles="$(TargetDir)$(ProjectName).dll;Help.md;palette.json" DestinationFolder="$(SolutionDir)HOI4UMT.UI\bin\$(Platform)\$(Configuration)\Plugins\$(ProjectName)" />
 
 		<Message Text="Copied build files" Importance="High" />
 	</Target>

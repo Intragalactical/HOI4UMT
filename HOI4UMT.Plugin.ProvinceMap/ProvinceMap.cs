@@ -21,7 +21,28 @@ public partial class ProvinceMap : UserControl {
     }
 
     private IMapperState MapperState { get; }
-    private Option<Bitmap> LandInput { get; set; }
+
+    private Option<Bitmap> landInput = Option<Bitmap>.None;
+    private Option<Bitmap> LandInput {
+        get => landInput;
+        set {
+            if (landInput != value) {
+                _ = landInput.Iter(landInput => landInput.Dispose());
+
+                if (value.IsSome) {
+                    Overlay.Hide();
+                    Enabled = true;
+                } else {
+                    Overlay.Show();
+                    Enabled = false;
+                }
+
+                landInput = value;
+            }
+        }
+    }
+
+
     private ProvinceMapOverlay Overlay { get; }
     private ProvinceMapGeneratingOverlay GeneratingOverlay { get; }
 
@@ -73,30 +94,32 @@ public partial class ProvinceMap : UserControl {
                 )
         );
 
-    private void MapperState_OnResourceChanged(string name, Option<IModResource> resource) {
-        void onLandInputChanged() {
+    private Unit MapperState_OnResourceChanged(string name, Option<IModResource> resource) {
+        Unit onLandInputChanged() {
             LandInput = resource.Match(
                 resource => ((IModResource<Bitmap>)resource).Raw,
                 () => Option<Bitmap>.None
             );
-            Overlay.Hide();
-            Enabled = true;
+
+            return Unit.Default;
         }
 
-        void onProvinceMapChanged() {
+        Unit onProvinceMapChanged() {
             ProvinceMapImage.Image?.Dispose();
             ProvinceMapImage.Image = resource.Match(
                 resource => ((IModResource<Bitmap>)resource).Raw,
                 () => Properties.Resources.regenerateprovincemap
             );
+
+            return Unit.Default;
         }
 
-        Action action = name switch {
+        Func<Unit> action = name switch {
             "LandInput" => onLandInputChanged,
             "ProvinceMap" => onProvinceMapChanged,
-            _ => () => { }
+            _ => () => Unit.Default
         };
-        action();
+        return action();
     }
 
     #region NumericUpDown Validators
@@ -262,7 +285,7 @@ public partial class ProvinceMap : UserControl {
         texture.Save(textureStream, ComputeSharp.ImageFormat.Bmp);
 
         Bitmap finalBmp = (Bitmap)Image.FromStream(textureStream);
-        return PixelFormatConverter.ConvertRGB(finalBmp, PixelFormat.Format24bppRgb);
+        return PixelFormatConverter.ConvertToNonIndexed(finalBmp, PixelFormat.Format24bppRgb);
     }
 
     private static ReadWriteTexture2D<Rgba32, float4> GetTextureFromBitmap(in Bitmap bmp) {

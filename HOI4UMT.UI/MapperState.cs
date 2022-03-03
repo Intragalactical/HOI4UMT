@@ -5,10 +5,11 @@ using LanguageExt;
 
 namespace HOI4UMT.UI;
 
-internal class MapperState : IMapperState {
+internal struct MapperState : IMapperState {
     public event OnResourceChangedHandler? OnResourceChanged;
 
-    public void SetResource(string name, Option<IModResource> resource) {
-        OnResourceChanged?.Invoke(name, resource);
+    public IMapperState SetResource(string name, Option<IModResource> resource) {
+        _ = OnResourceChanged?.Invoke(name, resource);
+        return this;
     }
 }

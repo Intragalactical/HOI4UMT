@@ -14,5 +14,5 @@ public interface IPlugin {
     /// </summary>
     double Position { get; }
 
-    UserControl CreateControl(IMapperState mapperState);
+    UserControl CreateControl(IMapperState mapperState, string subfolder);
 }

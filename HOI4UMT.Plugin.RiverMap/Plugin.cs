@@ -10,6 +10,6 @@ public class Plugin : IPlugin {
 
     public double Position => 1;
 
-    public UserControl CreateControl(IMapperState mapperState)
-        => new RiverMap(mapperState);
+    public UserControl CreateControl(IMapperState mapperState, string subfolder)
+        => new RiverMap(mapperState, subfolder);
 }

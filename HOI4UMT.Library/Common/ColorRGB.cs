@@ -15,6 +15,13 @@ public readonly record struct ColorRGB : IEquatable<ColorRGB> {
     public readonly byte B;
     public readonly int Value;
 
+    public ColorRGB(Color color) {
+        R = color.R;
+        G = color.G;
+        B = color.B;
+        Value = color.ToArgb();
+    }
+
     public ColorRGB(byte r, byte g, byte b) {
         R = r;
         G = g;
@@ -39,6 +46,13 @@ public readonly record struct ColorRGB : IEquatable<ColorRGB> {
         return string.Format("R{0}, G{1}, B{2}", R, G, B);
     }
 
+    public Color ToDrawingColor()
+        => Color.FromArgb(R, G, B);
+
     public float3 ToFloat3()
         => new(R / 255f, G / 255f, B / 255f);
+
+    // THANK YOU! -> https://stackoverflow.com/a/37874124
+    public byte To8BitRGB()
+        => (byte)Math.Min(255, Math.Max(0, (R * 7 / 255) << (5 + (G * 7 / 255)) << (2 + (B * 3 / 255))));
 }

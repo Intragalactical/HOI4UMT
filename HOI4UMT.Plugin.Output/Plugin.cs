@@ -10,6 +10,6 @@ public class Plugin : IPlugin {
 
     public double Position => 4;
 
-    public UserControl CreateControl(IMapperState mapperState)
+    public UserControl CreateControl(IMapperState mapperState, string _)
         => new Output(mapperState);
 }

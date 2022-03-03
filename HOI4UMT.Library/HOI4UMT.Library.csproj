@@ -14,12 +14,14 @@
 	<GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
 	<DebugType>embedded</DebugType>
 	<EnablePreviewFeatures>True</EnablePreviewFeatures>
+	<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ComputeSharp" Version="2.0.0-alpha.18" />
     <PackageReference Include="ComputeSharp.Dynamic" Version="2.0.0-alpha.18" />
     <PackageReference Include="LanguageExt.Core" Version="4.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
   </ItemGroup>
 	
